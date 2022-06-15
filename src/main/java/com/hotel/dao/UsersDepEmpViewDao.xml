@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.UsersDepEmpViewDao">
+
+    <resultMap type="com.hotel.entity.UsersDepEmpView" id="UsersDepEmpViewMap">
+        <result property="empid" column="empId" jdbcType="INTEGER"/>
+        <result property="empname" column="empName" jdbcType="VARCHAR"/>
+        <result property="empsex" column="empSex" jdbcType="VARCHAR"/>
+        <result property="empage" column="empAge" jdbcType="INTEGER"/>
+        <result property="empphone" column="empPhone" jdbcType="VARCHAR"/>
+        <result property="empwage" column="empWage" jdbcType="INTEGER"/>
+        <result property="empemail" column="empEmail" jdbcType="VARCHAR"/>
+        <result property="emppay" column="empPay" jdbcType="INTEGER"/>
+        <result property="etime" column="eTime" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="depid" column="depId" jdbcType="INTEGER"/>
+        <result property="depname" column="depName" jdbcType="VARCHAR"/>
+        <result property="usersid" column="usersId" jdbcType="INTEGER"/>
+        <result property="roleid" column="roleId" jdbcType="INTEGER"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="rolename" column="roleName" jdbcType="VARCHAR"/>
+        <result property="funlist" column="funList" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UsersDepEmpViewMap">
+        select empId,
+               empName,
+               empSex,
+               empAge,
+               empPhone,
+               empWage,
+               empEmail,
+               empPay,
+               eTime,
+               remark,
+               depId,
+               depName,
+               usersId,
+               roleId,
+               account,
+               password,
+               roleName,
+               funList
+        from hotelmanager.users_dep_emp_view
+        where empId= #{empid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UsersDepEmpViewMap">
+        select empId,
+               empName,
+               empSex,
+               empAge,
+               empPhone,
+               empWage,
+               empEmail,
+               empPay,
+               eTime,
+               remark,
+               depId,
+               depName,
+               usersId,
+               roleId,
+               account,
+               password,
+               roleName,
+               funList
+        from hotelmanager.users_dep_emp_view
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UsersDepEmpViewMap">
+        select
+        empId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay, eTime, remark, depId, depName, usersId,
+        roleId, account, password, roleName, funList
+        from hotelmanager.users_dep_emp_view
+        <where>
+            <if test="empid != null">
+                and empId = #{empid}
+            </if>
+            <if test="empname != null and empname != ''">
+                and empName = #{empname}
+            </if>
+            <if test="empsex != null and empsex != ''">
+                and empSex = #{empsex}
+            </if>
+            <if test="empage != null">
+                and empAge = #{empage}
+            </if>
+            <if test="empphone != null and empphone != ''">
+                and empPhone = #{empphone}
+            </if>
+            <if test="empwage != null">
+                and empWage = #{empwage}
+            </if>
+            <if test="empemail != null and empemail != ''">
+                and empEmail = #{empemail}
+            </if>
+            <if test="emppay != null">
+                and empPay = #{emppay}
+            </if>
+            <if test="etime != null">
+                and eTime = #{etime}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="depid != null">
+                and depId = #{depid}
+            </if>
+            <if test="depname != null and depname != ''">
+                and depName = #{depname}
+            </if>
+            <if test="usersid != null">
+                and usersId = #{usersid}
+            </if>
+            <if test="roleid != null">
+                and roleId = #{roleid}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="rolename != null and rolename != ''">
+                and roleName = #{rolename}
+            </if>
+            <if test="funlist != null and funlist != ''">
+                and funList = #{funlist}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.users_dep_emp_view(empId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay,
+                                                    eTime, remark, depId, depName, usersId, roleId, password, roleName,
+                                                    funList)
+        values (#{empid}, #{empname}, #{empsex}, #{empage}, #{empphone}, #{empwage}, #{empemail}, #{emppay}, #{etime},
+                #{remark}, #{depid}, #{depname}, #{usersid}, #{roleid}, #{password}, #{rolename}, #{funlist})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.users_dep_emp_view(empId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay,
+        eTime, remark, depId, depName, usersId, roleId, password, roleName, funList)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.empid}, #{entity.empname}, #{entity.empsex}, #{entity.empage}, #{entity.empphone},
+            #{entity.empwage}, #{entity.empemail}, #{entity.emppay}, #{entity.etime}, #{entity.remark}, #{entity.depid},
+            #{entity.depname}, #{entity.usersid}, #{entity.roleid}, #{entity.password}, #{entity.rolename},
+            #{entity.funlist})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.users_dep_emp_view(empId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay,
+        eTime, remark, depId, depName, usersId, roleId, password, roleName, funList)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.empid}, #{entity.empname}, #{entity.empsex}, #{entity.empage}, #{entity.empphone},
+            #{entity.empwage}, #{entity.empemail}, #{entity.emppay}, #{entity.etime}, #{entity.remark}, #{entity.depid},
+            #{entity.depname}, #{entity.usersid}, #{entity.roleid}, #{entity.password}, #{entity.rolename},
+            #{entity.funlist})
+        </foreach>
+        on duplicate key update
+        empId = values(empId) , empName = values(empName) , empSex = values(empSex) , empAge = values(empAge) , empPhone
+        = values(empPhone) , empWage = values(empWage) , empEmail = values(empEmail) , empPay = values(empPay) , eTime =
+        values(eTime) , remark = values(remark) , depId = values(depId) , depName = values(depName) , usersId =
+        values(usersId) , roleId = values(roleId) , password = values(password) , roleName = values(roleName) , funList
+        = values(funList)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.users_dep_emp_view
+        <set>
+            <if test="empid != null">
+                empId = #{empid},
+            </if>
+            <if test="empname != null and empname != ''">
+                empName = #{empname},
+            </if>
+            <if test="empsex != null and empsex != ''">
+                empSex = #{empsex},
+            </if>
+            <if test="empage != null">
+                empAge = #{empage},
+            </if>
+            <if test="empphone != null and empphone != ''">
+                empPhone = #{empphone},
+            </if>
+            <if test="empwage != null">
+                empWage = #{empwage},
+            </if>
+            <if test="empemail != null and empemail != ''">
+                empEmail = #{empemail},
+            </if>
+            <if test="emppay != null">
+                empPay = #{emppay},
+            </if>
+            <if test="etime != null">
+                eTime = #{etime},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="depid != null">
+                depId = #{depid},
+            </if>
+            <if test="depname != null and depname != ''">
+                depName = #{depname},
+            </if>
+            <if test="usersid != null">
+                usersId = #{usersid},
+            </if>
+            <if test="roleid != null">
+                roleId = #{roleid},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="rolename != null and rolename != ''">
+                roleName = #{rolename},
+            </if>
+            <if test="funlist != null and funlist != ''">
+                funList = #{funlist},
+            </if>
+        </set>
+        where = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.users_dep_emp_view
+        where = #{}
+    </delete>
+
+</mapper>
+

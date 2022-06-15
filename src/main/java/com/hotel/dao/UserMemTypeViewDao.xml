@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.UserMemTypeViewDao">
+
+    <resultMap type="com.hotel.entity.UserMemTypeView" id="UserMemTypeViewMap">
+        <result property="memid" column="memId" jdbcType="INTEGER"/>
+        <result property="memname" column="memName" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="memsex" column="memsex" jdbcType="VARCHAR"/>
+        <result property="idcard" column="IDCard" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="memint" column="memInt" jdbcType="INTEGER"/>
+        <result property="regisdate" column="regisdate" jdbcType="TIMESTAMP"/>
+        <result property="userstate" column="userstate" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="usersid" column="usersId" jdbcType="INTEGER"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="roleid" column="roleId" jdbcType="INTEGER"/>
+        <result property="rolename" column="roleName" jdbcType="VARCHAR"/>
+        <result property="funlist" column="funList" jdbcType="VARCHAR"/>
+        <result property="memTypeId" column="mem_type_Id" jdbcType="INTEGER"/>
+        <result property="memtype" column="memType" jdbcType="VARCHAR"/>
+        <result property="discount" column="discount" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMemTypeViewMap">
+        select memId,
+               memName,
+               phone,
+               memsex,
+               IDCard,
+               email,
+               memInt,
+               regisdate,
+               userstate,
+               remark,
+               usersId,
+               account,
+               password,
+               roleId,
+               roleName,
+               funList,
+               mem_type_Id,
+               memType,
+               discount
+        from hotelmanager.user_mem_type_view
+        where memId= #{memid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserMemTypeViewMap">
+        select memId,
+               memName,
+               phone,
+               memsex,
+               IDCard,
+               email,
+               memInt,
+               regisdate,
+               userstate,
+               remark,
+               usersId,
+               account,
+               password,
+               roleId,
+               roleName,
+               funList,
+               mem_type_Id,
+               memType,
+               discount
+        from hotelmanager.user_mem_type_view
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserMemTypeViewMap">
+        select
+        memId, memName, phone, memsex, IDCard, email, memInt, regisdate, userstate, remark, usersId, account, password,
+        roleId, roleName, funList, mem_type_Id, memType, discount
+        from hotelmanager.user_mem_type_view
+        <where>
+            <if test="memid != null">
+                and memId = #{memid}
+            </if>
+            <if test="memname != null and memname != ''">
+                and memName = #{memname}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="memsex != null and memsex != ''">
+                and memsex = #{memsex}
+            </if>
+            <if test="idcard != null and idcard != ''">
+                and IDCard = #{idcard}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="memint != null">
+                and memInt = #{memint}
+            </if>
+            <if test="regisdate != null">
+                and regisdate = #{regisdate}
+            </if>
+            <if test="userstate != null and userstate != ''">
+                and userstate = #{userstate}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="usersid != null">
+                and usersId = #{usersid}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="roleid != null">
+                and roleId = #{roleid}
+            </if>
+            <if test="rolename != null and rolename != ''">
+                and roleName = #{rolename}
+            </if>
+            <if test="funlist != null and funlist != ''">
+                and funList = #{funlist}
+            </if>
+            <if test="memTypeId != null">
+                and mem_type_Id = #{memTypeId}
+            </if>
+            <if test="memtype != null and memtype != ''">
+                and memType = #{memtype}
+            </if>
+            <if test="discount != null">
+                and discount = #{discount}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.user_mem_type_view(memId, memName, phone, memsex, IDCard, email, memInt, regisdate,
+                                                    userstate, remark, usersId, password, roleId, roleName, funList,
+                                                    mem_type_Id, memType, discount)
+        values (#{memid}, #{memname}, #{phone}, #{memsex}, #{idcard}, #{email}, #{memint}, #{regisdate}, #{userstate},
+                #{remark}, #{usersid}, #{password}, #{roleid}, #{rolename}, #{funlist}, #{memTypeId}, #{memtype},
+                #{discount})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.user_mem_type_view(memId, memName, phone, memsex, IDCard, email, memInt, regisdate,
+        userstate, remark, usersId, password, roleId, roleName, funList, mem_type_Id, memType, discount)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.memid}, #{entity.memname}, #{entity.phone}, #{entity.memsex}, #{entity.idcard}, #{entity.email},
+            #{entity.memint}, #{entity.regisdate}, #{entity.userstate}, #{entity.remark}, #{entity.usersid},
+            #{entity.password}, #{entity.roleid}, #{entity.rolename}, #{entity.funlist}, #{entity.memTypeId},
+            #{entity.memtype}, #{entity.discount})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.user_mem_type_view(memId, memName, phone, memsex, IDCard, email, memInt, regisdate,
+        userstate, remark, usersId, password, roleId, roleName, funList, mem_type_Id, memType, discount)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.memid}, #{entity.memname}, #{entity.phone}, #{entity.memsex}, #{entity.idcard}, #{entity.email},
+            #{entity.memint}, #{entity.regisdate}, #{entity.userstate}, #{entity.remark}, #{entity.usersid},
+            #{entity.password}, #{entity.roleid}, #{entity.rolename}, #{entity.funlist}, #{entity.memTypeId},
+            #{entity.memtype}, #{entity.discount})
+        </foreach>
+        on duplicate key update
+        memId = values(memId) , memName = values(memName) , phone = values(phone) , memsex = values(memsex) , IDCard =
+        values(IDCard) , email = values(email) , memInt = values(memInt) , regisdate = values(regisdate) , userstate =
+        values(userstate) , remark = values(remark) , usersId = values(usersId) , password = values(password) , roleId =
+        values(roleId) , roleName = values(roleName) , funList = values(funList) , mem_type_Id = values(mem_type_Id) ,
+        memType = values(memType) , discount = values(discount)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.user_mem_type_view
+        <set>
+            <if test="memid != null">
+                memId = #{memid},
+            </if>
+            <if test="memname != null and memname != ''">
+                memName = #{memname},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="memsex != null and memsex != ''">
+                memsex = #{memsex},
+            </if>
+            <if test="idcard != null and idcard != ''">
+                IDCard = #{idcard},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="memint != null">
+                memInt = #{memint},
+            </if>
+            <if test="regisdate != null">
+                regisdate = #{regisdate},
+            </if>
+            <if test="userstate != null and userstate != ''">
+                userstate = #{userstate},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="usersid != null">
+                usersId = #{usersid},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="roleid != null">
+                roleId = #{roleid},
+            </if>
+            <if test="rolename != null and rolename != ''">
+                roleName = #{rolename},
+            </if>
+            <if test="funlist != null and funlist != ''">
+                funList = #{funlist},
+            </if>
+            <if test="memTypeId != null">
+                mem_type_Id = #{memTypeId},
+            </if>
+            <if test="memtype != null and memtype != ''">
+                memType = #{memtype},
+            </if>
+            <if test="discount != null">
+                discount = #{discount},
+            </if>
+        </set>
+        where = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.user_mem_type_view
+        where = #{}
+    </delete>
+
+</mapper>
+

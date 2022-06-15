@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.HotelOrderViewDao">
+
+    <resultMap type="com.hotel.entity.HotelOrderView" id="HotelOrderViewMap">
+        <result property="orderid" column="orderId" jdbcType="INTEGER"/>
+        <result property="orderstate" column="orderstate" jdbcType="VARCHAR"/>
+        <result property="deposit" column="Deposit" jdbcType="INTEGER"/>
+        <result property="oPrice" column="o_price" jdbcType="NUMERIC"/>
+        <result property="ordertime" column="ordertime" jdbcType="TIMESTAMP"/>
+        <result property="personnum" column="personNum" jdbcType="INTEGER"/>
+        <result property="intime" column="inTime" jdbcType="TIMESTAMP"/>
+        <result property="outtime" column="outTime" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="memid" column="memId" jdbcType="INTEGER"/>
+        <result property="usersid" column="usersId" jdbcType="INTEGER"/>
+        <result property="memTypeId" column="mem_type_Id" jdbcType="INTEGER"/>
+        <result property="memname" column="memName" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="memsex" column="memsex" jdbcType="VARCHAR"/>
+        <result property="idcard" column="IDCard" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="memint" column="memInt" jdbcType="INTEGER"/>
+        <result property="regisdate" column="regisdate" jdbcType="TIMESTAMP"/>
+        <result property="userstate" column="userstate" jdbcType="VARCHAR"/>
+        <result property="memtype" column="memType" jdbcType="VARCHAR"/>
+        <result property="discount" column="discount" jdbcType="NUMERIC"/>
+        <result property="roomid" column="roomId" jdbcType="INTEGER"/>
+        <result property="roomNum" column="room_num" jdbcType="VARCHAR"/>
+        <result property="rtypeid" column="rtypeId" jdbcType="INTEGER"/>
+        <result property="isres" column="isRes" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="rtypename" column="rtypeName" jdbcType="VARCHAR"/>
+        <result property="rPrice" column="r_price" jdbcType="NUMERIC"/>
+        <result property="livenum" column="liveNum" jdbcType="INTEGER"/>
+        <result property="facility" column="facility" jdbcType="VARCHAR"/>
+        <result property="resmoney" column="resMoney" jdbcType="NUMERIC"/>
+        <result property="isnet" column="isNet" jdbcType="INTEGER"/>
+        <result property="isfoot" column="isfoot" jdbcType="INTEGER"/>
+        <result property="defimg" column="defImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="HotelOrderViewMap">
+        select orderId,
+               orderstate,
+               Deposit,
+               o_price,
+               ordertime,
+               personNum,
+               inTime,
+               outTime,
+               remark,
+               memId,
+               usersId,
+               mem_type_Id,
+               memName,
+               phone,
+               memsex,
+               IDCard,
+               email,
+               memInt,
+               regisdate,
+               userstate,
+               memType,
+               discount,
+               roomId,
+               room_num,
+               rtypeId,
+               isRes,
+               state,
+               rtypeName,
+               r_price,
+               liveNum,
+               facility,
+               resMoney,
+               isNet,
+               isfoot,
+               defImg
+        from hotelmanager.hotel_order_view
+        where orderId= #{orederid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="HotelOrderViewMap">
+        select orderId,
+               orderstate,
+               Deposit,
+               o_price,
+               ordertime,
+               personNum,
+               inTime,
+               outTime,
+               remark,
+               memId,
+               usersId,
+               mem_type_Id,
+               memName,
+               phone,
+               memsex,
+               IDCard,
+               email,
+               memInt,
+               regisdate,
+               userstate,
+               memType,
+               discount,
+               roomId,
+               room_num,
+               rtypeId,
+               isRes,
+               state,
+               rtypeName,
+               r_price,
+               liveNum,
+               facility,
+               resMoney,
+               isNet,
+               isfoot,
+               defImg
+        from hotelmanager.hotel_order_view
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="HotelOrderViewMap">
+        select
+        orderId, orderstate, Deposit, o_price, ordertime, personNum, inTime, outTime, remark, memId, usersId,
+        mem_type_Id, memName, phone, memsex, IDCard, email, memInt, regisdate, userstate, memType, discount, roomId,
+        room_num, rtypeId, isRes, state, rtypeName, r_price, liveNum, facility, resMoney, isNet, isfoot, defImg
+        from hotelmanager.hotel_order_view
+        <where>
+            <if test="orderid != null">
+                and orderId = #{orderid}
+            </if>
+            <if test="orderstate != null and orderstate != ''">
+                and orderstate = #{orderstate}
+            </if>
+            <if test="deposit != null">
+                and Deposit = #{deposit}
+            </if>
+            <if test="oPrice != null">
+                and o_price = #{oPrice}
+            </if>
+            <if test="ordertime != null">
+                and ordertime = #{ordertime}
+            </if>
+            <if test="personnum != null">
+                and personNum = #{personnum}
+            </if>
+            <if test="intime != null">
+                and inTime = #{intime}
+            </if>
+            <if test="outtime != null">
+                and outTime = #{outtime}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="memid != null">
+                and memId = #{memid}
+            </if>
+            <if test="usersid != null">
+                and usersId = #{usersid}
+            </if>
+            <if test="memTypeId != null">
+                and mem_type_Id = #{memTypeId}
+            </if>
+            <if test="memname != null and memname != ''">
+                and memName = #{memname}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="memsex != null and memsex != ''">
+                and memsex = #{memsex}
+            </if>
+            <if test="idcard != null and idcard != ''">
+                and IDCard = #{idcard}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="memint != null">
+                and memInt = #{memint}
+            </if>
+            <if test="regisdate != null">
+                and regisdate = #{regisdate}
+            </if>
+            <if test="userstate != null and userstate != ''">
+                and userstate = #{userstate}
+            </if>
+            <if test="memtype != null and memtype != ''">
+                and memType = #{memtype}
+            </if>
+            <if test="discount != null">
+                and discount = #{discount}
+            </if>
+            <if test="roomid != null">
+                and roomId = #{roomid}
+            </if>
+            <if test="roomNum != null and roomNum != ''">
+                and room_num = #{roomNum}
+            </if>
+            <if test="rtypeid != null">
+                and rtypeId = #{rtypeid}
+            </if>
+            <if test="isres != null">
+                and isRes = #{isres}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+            <if test="rtypename != null and rtypename != ''">
+                and rtypeName = #{rtypename}
+            </if>
+            <if test="rPrice != null">
+                and r_price = #{rPrice}
+            </if>
+            <if test="livenum != null">
+                and liveNum = #{livenum}
+            </if>
+            <if test="facility != null and facility != ''">
+                and facility = #{facility}
+            </if>
+            <if test="resmoney != null">
+                and resMoney = #{resmoney}
+            </if>
+            <if test="isnet != null">
+                and isNet = #{isnet}
+            </if>
+            <if test="isfoot != null">
+                and isfoot = #{isfoot}
+            </if>
+            <if test="defimg != null and defimg != ''">
+                and defImg = #{defimg}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.hotel_order_view(orderId, orderstate, Deposit, o_price, ordertime, personNum, inTime,
+                                                  outTime, remark, memId, usersId, mem_type_Id, memName, phone, memsex,
+                                                  IDCard, email, memInt, regisdate, userstate, memType, discount,
+                                                  roomId, room_num, rtypeId, isRes, state, rtypeName, r_price, liveNum,
+                                                  facility, resMoney, isNet, isfoot, defImg)
+        values (#{orderid}, #{orderstate}, #{deposit}, #{oPrice}, #{ordertime}, #{personnum}, #{intime}, #{outtime},
+                #{remark}, #{memid}, #{usersid}, #{memTypeId}, #{memname}, #{phone}, #{memsex}, #{idcard}, #{email},
+                #{memint}, #{regisdate}, #{userstate}, #{memtype}, #{discount}, #{roomid}, #{roomNum}, #{rtypeid},
+                #{isres}, #{state}, #{rtypename}, #{rPrice}, #{livenum}, #{facility}, #{resmoney}, #{isnet}, #{isfoot},
+                #{defimg})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.hotel_order_view(orderId, orderstate, Deposit, o_price, ordertime, personNum, inTime,
+        outTime, remark, memId, usersId, mem_type_Id, memName, phone, memsex, IDCard, email, memInt, regisdate,
+        userstate, memType, discount, roomId, room_num, rtypeId, isRes, state, rtypeName, r_price, liveNum, facility,
+        resMoney, isNet, isfoot, defImg)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.orderid}, #{entity.orderstate}, #{entity.deposit}, #{entity.oPrice}, #{entity.ordertime},
+            #{entity.personnum}, #{entity.intime}, #{entity.outtime}, #{entity.remark}, #{entity.memid},
+            #{entity.usersid}, #{entity.memTypeId}, #{entity.memname}, #{entity.phone}, #{entity.memsex},
+            #{entity.idcard}, #{entity.email}, #{entity.memint}, #{entity.regisdate}, #{entity.userstate},
+            #{entity.memtype}, #{entity.discount}, #{entity.roomid}, #{entity.roomNum}, #{entity.rtypeid},
+            #{entity.isres}, #{entity.state}, #{entity.rtypename}, #{entity.rPrice}, #{entity.livenum},
+            #{entity.facility}, #{entity.resmoney}, #{entity.isnet}, #{entity.isfoot}, #{entity.defimg})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.hotel_order_view(orderId, orderstate, Deposit, o_price, ordertime, personNum, inTime,
+        outTime, remark, memId, usersId, mem_type_Id, memName, phone, memsex, IDCard, email, memInt, regisdate,
+        userstate, memType, discount, roomId, room_num, rtypeId, isRes, state, rtypeName, r_price, liveNum, facility,
+        resMoney, isNet, isfoot, defImg)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.orderid}, #{entity.orderstate}, #{entity.deposit}, #{entity.oPrice}, #{entity.ordertime},
+            #{entity.personnum}, #{entity.intime}, #{entity.outtime}, #{entity.remark}, #{entity.memid},
+            #{entity.usersid}, #{entity.memTypeId}, #{entity.memname}, #{entity.phone}, #{entity.memsex},
+            #{entity.idcard}, #{entity.email}, #{entity.memint}, #{entity.regisdate}, #{entity.userstate},
+            #{entity.memtype}, #{entity.discount}, #{entity.roomid}, #{entity.roomNum}, #{entity.rtypeid},
+            #{entity.isres}, #{entity.state}, #{entity.rtypename}, #{entity.rPrice}, #{entity.livenum},
+            #{entity.facility}, #{entity.resmoney}, #{entity.isnet}, #{entity.isfoot}, #{entity.defimg})
+        </foreach>
+        on duplicate key update
+        orderId = values(orderId) , orderstate = values(orderstate) , Deposit = values(Deposit) , o_price =
+        values(o_price) , ordertime = values(ordertime) , personNum = values(personNum) , inTime = values(inTime) ,
+        outTime = values(outTime) , remark = values(remark) , memId = values(memId) , usersId = values(usersId) ,
+        mem_type_Id = values(mem_type_Id) , memName = values(memName) , phone = values(phone) , memsex = values(memsex)
+        , IDCard = values(IDCard) , email = values(email) , memInt = values(memInt) , regisdate = values(regisdate) ,
+        userstate = values(userstate) , memType = values(memType) , discount = values(discount) , roomId =
+        values(roomId) , room_num = values(room_num) , rtypeId = values(rtypeId) , isRes = values(isRes) , state =
+        values(state) , rtypeName = values(rtypeName) , r_price = values(r_price) , liveNum = values(liveNum) , facility
+        = values(facility) , resMoney = values(resMoney) , isNet = values(isNet) , isfoot = values(isfoot) , defImg =
+        values(defImg)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.hotel_order_view
+        <set>
+            <if test="orderid != null">
+                orderId = #{orderid},
+            </if>
+            <if test="orderstate != null and orderstate != ''">
+                orderstate = #{orderstate},
+            </if>
+            <if test="deposit != null">
+                Deposit = #{deposit},
+            </if>
+            <if test="oPrice != null">
+                o_price = #{oPrice},
+            </if>
+            <if test="ordertime != null">
+                ordertime = #{ordertime},
+            </if>
+            <if test="personnum != null">
+                personNum = #{personnum},
+            </if>
+            <if test="intime != null">
+                inTime = #{intime},
+            </if>
+            <if test="outtime != null">
+                outTime = #{outtime},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="memid != null">
+                memId = #{memid},
+            </if>
+            <if test="usersid != null">
+                usersId = #{usersid},
+            </if>
+            <if test="memTypeId != null">
+                mem_type_Id = #{memTypeId},
+            </if>
+            <if test="memname != null and memname != ''">
+                memName = #{memname},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="memsex != null and memsex != ''">
+                memsex = #{memsex},
+            </if>
+            <if test="idcard != null and idcard != ''">
+                IDCard = #{idcard},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="memint != null">
+                memInt = #{memint},
+            </if>
+            <if test="regisdate != null">
+                regisdate = #{regisdate},
+            </if>
+            <if test="userstate != null and userstate != ''">
+                userstate = #{userstate},
+            </if>
+            <if test="memtype != null and memtype != ''">
+                memType = #{memtype},
+            </if>
+            <if test="discount != null">
+                discount = #{discount},
+            </if>
+            <if test="roomid != null">
+                roomId = #{roomid},
+            </if>
+            <if test="roomNum != null and roomNum != ''">
+                room_num = #{roomNum},
+            </if>
+            <if test="rtypeid != null">
+                rtypeId = #{rtypeid},
+            </if>
+            <if test="isres != null">
+                isRes = #{isres},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="rtypename != null and rtypename != ''">
+                rtypeName = #{rtypename},
+            </if>
+            <if test="rPrice != null">
+                r_price = #{rPrice},
+            </if>
+            <if test="livenum != null">
+                liveNum = #{livenum},
+            </if>
+            <if test="facility != null and facility != ''">
+                facility = #{facility},
+            </if>
+            <if test="resmoney != null">
+                resMoney = #{resmoney},
+            </if>
+            <if test="isnet != null">
+                isNet = #{isnet},
+            </if>
+            <if test="isfoot != null">
+                isfoot = #{isfoot},
+            </if>
+            <if test="defimg != null and defimg != ''">
+                defImg = #{defimg},
+            </if>
+        </set>
+        where = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.hotel_order_view
+        where = #{}
+    </delete>
+
+</mapper>
+

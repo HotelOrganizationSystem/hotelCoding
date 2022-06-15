@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.EmpDao">
+
+    <resultMap type="com.hotel.entity.Emp" id="EmpMap">
+        <result property="empid" column="empId" jdbcType="INTEGER"/>
+        <result property="depid" column="depId" jdbcType="INTEGER"/>
+        <result property="usersid" column="usersId" jdbcType="INTEGER"/>
+        <result property="empname" column="empName" jdbcType="VARCHAR"/>
+        <result property="empsex" column="empSex" jdbcType="VARCHAR"/>
+        <result property="empage" column="empAge" jdbcType="INTEGER"/>
+        <result property="empphone" column="empPhone" jdbcType="VARCHAR"/>
+        <result property="empwage" column="empWage" jdbcType="INTEGER"/>
+        <result property="empemail" column="empEmail" jdbcType="VARCHAR"/>
+        <result property="emppay" column="empPay" jdbcType="INTEGER"/>
+        <result property="etime" column="eTime" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EmpMap">
+        select empId,
+               depId,
+               usersId,
+               empName,
+               empSex,
+               empAge,
+               empPhone,
+               empWage,
+               empEmail,
+               empPay,
+               eTime,
+               remark
+        from hotelmanager.emp
+        where empId = #{empid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EmpMap">
+        select empId,
+               depId,
+               usersId,
+               empName,
+               empSex,
+               empAge,
+               empPhone,
+               empWage,
+               empEmail,
+               empPay,
+               eTime,
+               remark
+        from hotelmanager.emp
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EmpMap">
+        select
+        empId, depId, usersId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay, eTime, remark
+        from hotelmanager.emp
+        <where>
+            <if test="empid != null">
+                and empId = #{empid}
+            </if>
+            <if test="depid != null">
+                and depId = #{depid}
+            </if>
+            <if test="usersid != null">
+                and usersId = #{usersid}
+            </if>
+            <if test="empname != null and empname != ''">
+                and empName = #{empname}
+            </if>
+            <if test="empsex != null and empsex != ''">
+                and empSex = #{empsex}
+            </if>
+            <if test="empage != null">
+                and empAge = #{empage}
+            </if>
+            <if test="empphone != null and empphone != ''">
+                and empPhone = #{empphone}
+            </if>
+            <if test="empwage != null">
+                and empWage = #{empwage}
+            </if>
+            <if test="empemail != null and empemail != ''">
+                and empEmail = #{empemail}
+            </if>
+            <if test="emppay != null">
+                and empPay = #{emppay}
+            </if>
+            <if test="etime != null">
+                and eTime = #{etime}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="empid" useGeneratedKeys="true">
+        insert into hotelmanager.emp(depId, usersId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay,
+                                     eTime, remark)
+        values (#{depid}, #{usersid}, #{empname}, #{empsex}, #{empage}, #{empphone}, #{empwage}, #{empemail}, #{emppay},
+                #{etime}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="empid" useGeneratedKeys="true">
+        insert into hotelmanager.emp(depId, usersId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay,
+        eTime, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.depid}, #{entity.usersid}, #{entity.empname}, #{entity.empsex}, #{entity.empage},
+            #{entity.empphone}, #{entity.empwage}, #{entity.empemail}, #{entity.emppay}, #{entity.etime},
+            #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="empid" useGeneratedKeys="true">
+        insert into hotelmanager.emp(depId, usersId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay,
+        eTime, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.depid}, #{entity.usersid}, #{entity.empname}, #{entity.empsex}, #{entity.empage},
+            #{entity.empphone}, #{entity.empwage}, #{entity.empemail}, #{entity.emppay}, #{entity.etime},
+            #{entity.remark})
+        </foreach>
+        on duplicate key update
+        depId = values(depId) , usersId = values(usersId) , empName = values(empName) , empSex = values(empSex) , empAge
+        = values(empAge) , empPhone = values(empPhone) , empWage = values(empWage) , empEmail = values(empEmail) ,
+        empPay = values(empPay) , eTime = values(eTime) , remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.emp
+        <set>
+            <if test="depid != null">
+                depId = #{depid},
+            </if>
+            <if test="usersid != null">
+                usersId = #{usersid},
+            </if>
+            <if test="empname != null and empname != ''">
+                empName = #{empname},
+            </if>
+            <if test="empsex != null and empsex != ''">
+                empSex = #{empsex},
+            </if>
+            <if test="empage != null">
+                empAge = #{empage},
+            </if>
+            <if test="empphone != null and empphone != ''">
+                empPhone = #{empphone},
+            </if>
+            <if test="empwage != null">
+                empWage = #{empwage},
+            </if>
+            <if test="empemail != null and empemail != ''">
+                empEmail = #{empemail},
+            </if>
+            <if test="emppay != null">
+                empPay = #{emppay},
+            </if>
+            <if test="etime != null">
+                eTime = #{etime},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where empId = #{empid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.emp
+        where empId = #{empid}
+    </delete>
+
+</mapper>
+

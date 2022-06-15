@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.DepDao">
+
+    <resultMap type="com.hotel.entity.Dep" id="DepMap">
+        <result property="depid" column="depId" jdbcType="INTEGER"/>
+        <result property="depname" column="depName" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DepMap">
+        select depId,
+               depName,
+               remark
+        from hotelmanager.dep
+        where depId = #{depid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DepMap">
+        select depId,
+               depName,
+               remark
+        from hotelmanager.dep
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="DepMap">
+        select
+        depId, depName, remark
+        from hotelmanager.dep
+        <where>
+            <if test="depid != null">
+                and depId = #{depid}
+            </if>
+            <if test="depname != null and depname != ''">
+                and depName = #{depname}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="depid" useGeneratedKeys="true">
+        insert into hotelmanager.dep(depName, remark)
+        values (#{depname}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="depid" useGeneratedKeys="true">
+        insert into hotelmanager.dep(depName, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.depname}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="depid" useGeneratedKeys="true">
+        insert into hotelmanager.dep(depName, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.depname}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        depName = values(depName) , remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.dep
+        <set>
+            <if test="depname != null and depname != ''">
+                depName = #{depname},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where depId = #{depid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.dep
+        where depId = #{depid}
+    </delete>
+
+</mapper>
+

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.UsersDao">
+
+    <resultMap type="com.hotel.entity.Users" id="UsersMap">
+        <result property="usersid" column="usersId" jdbcType="INTEGER"/>
+        <result property="roleid" column="roleId" jdbcType="INTEGER"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UsersMap">
+        select usersId,
+               roleId,
+               account,
+               password,
+               remark
+        from hotelmanager.users
+        where usersId = #{usersid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UsersMap">
+        select usersId,
+               roleId,
+               account,
+               password,
+               remark
+        from hotelmanager.users
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UsersMap">
+        select
+        usersId, roleId, account, password, remark
+        from hotelmanager.users
+        <where>
+            <if test="usersid != null">
+                and usersId = #{usersid}
+            </if>
+            <if test="roleid != null">
+                and roleId = #{roleid}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="usersid" useGeneratedKeys="true">
+        insert into hotelmanager.users(roleId, account, password, remark)
+        values (#{roleid}, #{account}, #{password}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="usersid" useGeneratedKeys="true">
+        insert into hotelmanager.users(roleId, account, password, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleid}, #{entity.account}, #{entity.password}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="usersid" useGeneratedKeys="true">
+        insert into hotelmanager.users(roleId, account, password, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleid}, #{entity.account}, #{entity.password}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        roleId = values(roleId) , account = values(account) , password = values(password) , remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.users
+        <set>
+            <if test="roleid != null">
+                roleId = #{roleid},
+            </if>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where usersId = #{usersid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.users
+        where usersId = #{usersid}
+    </delete>
+
+</mapper>
+

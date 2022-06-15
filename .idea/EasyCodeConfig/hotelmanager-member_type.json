@@ -1,0 +1,40 @@
+{
+  "name" : "MemberType",
+  "preName" : "",
+  "comment" : "会员类型表",
+  "templateGroupName" : "Default",
+  "fullColumn" : [ {
+    "name" : "memTypeId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "memtype",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "discount",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "remark",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "com.hotel",
+  "savePath" : "./src/main/java/com/hotel",
+  "saveModelName" : "hotelCoding"
+}

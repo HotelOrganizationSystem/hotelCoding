@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.RoomRtViewDao">
+
+    <resultMap type="com.hotel.entity.RoomRtView" id="RoomRtViewMap">
+        <result property="roomid" column="roomId" jdbcType="INTEGER"/>
+        <result property="roomNum" column="room_num" jdbcType="VARCHAR"/>
+        <result property="rtypeid" column="rtypeId" jdbcType="INTEGER"/>
+        <result property="isres" column="isRes" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="rtypename" column="rtypeName" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="livenum" column="liveNum" jdbcType="INTEGER"/>
+        <result property="facility" column="facility" jdbcType="VARCHAR"/>
+        <result property="resmoney" column="resMoney" jdbcType="NUMERIC"/>
+        <result property="isnet" column="isNet" jdbcType="INTEGER"/>
+        <result property="isfoot" column="isfoot" jdbcType="INTEGER"/>
+        <result property="defimg" column="defImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RoomRtViewMap">
+        select roomId,
+               room_num,
+               rtypeId,
+               isRes,
+               state,
+               remark,
+               rtypeName,
+               price,
+               liveNum,
+               facility,
+               resMoney,
+               isNet,
+               isfoot,
+               defImg
+        from hotelmanager.room_rT_view
+        where roomId= #{roomid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RoomRtViewMap">
+        select roomId,
+               room_num,
+               rtypeId,
+               isRes,
+               state,
+               remark,
+               rtypeName,
+               price,
+               liveNum,
+               facility,
+               resMoney,
+               isNet,
+               isfoot,
+               defImg
+        from hotelmanager.room_rT_view
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RoomRtViewMap">
+        select
+        roomId, room_num, rtypeId, isRes, state, remark, rtypeName, price, liveNum, facility, resMoney, isNet, isfoot,
+        defImg
+        from hotelmanager.room_rT_view
+        <where>
+            <if test="roomid != null">
+                and roomId = #{roomid}
+            </if>
+            <if test="roomNum != null and roomNum != ''">
+                and room_num = #{roomNum}
+            </if>
+            <if test="rtypeid != null">
+                and rtypeId = #{rtypeid}
+            </if>
+            <if test="isres != null">
+                and isRes = #{isres}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="rtypename != null and rtypename != ''">
+                and rtypeName = #{rtypename}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="livenum != null">
+                and liveNum = #{livenum}
+            </if>
+            <if test="facility != null and facility != ''">
+                and facility = #{facility}
+            </if>
+            <if test="resmoney != null">
+                and resMoney = #{resmoney}
+            </if>
+            <if test="isnet != null">
+                and isNet = #{isnet}
+            </if>
+            <if test="isfoot != null">
+                and isfoot = #{isfoot}
+            </if>
+            <if test="defimg != null and defimg != ''">
+                and defImg = #{defimg}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.room_rT_view(roomId, room_num, rtypeId, isRes, state, remark, rtypeName, price,
+                                              liveNum, facility, resMoney, isNet, isfoot, defImg)
+        values (#{roomid}, #{roomNum}, #{rtypeid}, #{isres}, #{state}, #{remark}, #{rtypename}, #{price}, #{livenum},
+                #{facility}, #{resmoney}, #{isnet}, #{isfoot}, #{defimg})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.room_rT_view(roomId, room_num, rtypeId, isRes, state, remark, rtypeName, price,
+        liveNum, facility, resMoney, isNet, isfoot, defImg)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roomid}, #{entity.roomNum}, #{entity.rtypeid}, #{entity.isres}, #{entity.state}, #{entity.remark},
+            #{entity.rtypename}, #{entity.price}, #{entity.livenum}, #{entity.facility}, #{entity.resmoney},
+            #{entity.isnet}, #{entity.isfoot}, #{entity.defimg})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into hotelmanager.room_rT_view(roomId, room_num, rtypeId, isRes, state, remark, rtypeName, price,
+        liveNum, facility, resMoney, isNet, isfoot, defImg)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roomid}, #{entity.roomNum}, #{entity.rtypeid}, #{entity.isres}, #{entity.state}, #{entity.remark},
+            #{entity.rtypename}, #{entity.price}, #{entity.livenum}, #{entity.facility}, #{entity.resmoney},
+            #{entity.isnet}, #{entity.isfoot}, #{entity.defimg})
+        </foreach>
+        on duplicate key update
+        roomId = values(roomId) , room_num = values(room_num) , rtypeId = values(rtypeId) , isRes = values(isRes) ,
+        state = values(state) , remark = values(remark) , rtypeName = values(rtypeName) , price = values(price) ,
+        liveNum = values(liveNum) , facility = values(facility) , resMoney = values(resMoney) , isNet = values(isNet) ,
+        isfoot = values(isfoot) , defImg = values(defImg)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.room_rT_view
+        <set>
+            <if test="roomid != null">
+                roomId = #{roomid},
+            </if>
+            <if test="roomNum != null and roomNum != ''">
+                room_num = #{roomNum},
+            </if>
+            <if test="rtypeid != null">
+                rtypeId = #{rtypeid},
+            </if>
+            <if test="isres != null">
+                isRes = #{isres},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="rtypename != null and rtypename != ''">
+                rtypeName = #{rtypename},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="livenum != null">
+                liveNum = #{livenum},
+            </if>
+            <if test="facility != null and facility != ''">
+                facility = #{facility},
+            </if>
+            <if test="resmoney != null">
+                resMoney = #{resmoney},
+            </if>
+            <if test="isnet != null">
+                isNet = #{isnet},
+            </if>
+            <if test="isfoot != null">
+                isfoot = #{isfoot},
+            </if>
+            <if test="defimg != null and defimg != ''">
+                defImg = #{defimg},
+            </if>
+        </set>
+        where = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.room_rT_view
+        where = #{}
+    </delete>
+
+</mapper>
+

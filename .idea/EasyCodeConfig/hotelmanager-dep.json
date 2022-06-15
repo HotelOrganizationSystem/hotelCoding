@@ -1,0 +1,33 @@
+{
+  "name" : "Dep",
+  "preName" : "",
+  "comment" : "部门表",
+  "templateGroupName" : "Default",
+  "fullColumn" : [ {
+    "name" : "depid",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "depname",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "remark",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "com.hotel",
+  "savePath" : "./src/main/java/com/hotel",
+  "saveModelName" : "hotelCoding"
+}

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.dao.RtypeDao">
+
+    <resultMap type="com.hotel.entity.Rtype" id="RtypeMap">
+        <result property="rtypeid" column="rtypeId" jdbcType="INTEGER"/>
+        <result property="rtypename" column="rtypeName" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="livenum" column="liveNum" jdbcType="INTEGER"/>
+        <result property="facility" column="facility" jdbcType="VARCHAR"/>
+        <result property="resmoney" column="resMoney" jdbcType="NUMERIC"/>
+        <result property="isnet" column="isNet" jdbcType="INTEGER"/>
+        <result property="isfoot" column="isfoot" jdbcType="INTEGER"/>
+        <result property="defimg" column="defImg" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <collection property="remainNum" select="com.hotel.dao.RtypeDao.getRemains" column="rtypeid"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RtypeMap">
+        select rtypeId,
+               rtypeName,
+               price,
+               liveNum,
+               facility,
+               resMoney,
+               isNet,
+               isfoot,
+               defImg,
+               remark
+        from hotelmanager.rtype
+        where rtypeId = #{rtypeid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RtypeMap">
+        select rtypeId,
+               rtypeName,
+               price,
+               liveNum,
+               facility,
+               resMoney,
+               isNet,
+               isfoot,
+               defImg,
+               remark
+        from hotelmanager.rtype
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RtypeMap">
+        select
+        rtypeId, rtypeName, price, liveNum, facility, resMoney, isNet, isfoot, defImg, remark
+        from hotelmanager.rtype
+        <where>
+            <if test="rtypeid != null">
+                and rtypeId = #{rtypeid}
+            </if>
+            <if test="rtypename != null and rtypename != ''">
+                and rtypeName = #{rtypename}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="livenum != null">
+                and liveNum = #{livenum}
+            </if>
+            <if test="facility != null and facility != ''">
+                and facility = #{facility}
+            </if>
+            <if test="resmoney != null">
+                and resMoney = #{resmoney}
+            </if>
+            <if test="isnet != null">
+                and isNet = #{isnet}
+            </if>
+            <if test="isfoot != null">
+                and isfoot = #{isfoot}
+            </if>
+            <if test="defimg != null and defimg != ''">
+                and defImg = #{defimg}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!-- List<Rtype> getTypes(); -->
+    <select id="getTypes" resultMap="RtypeMap">
+        select rt.*
+        from rtype rt
+        <where>
+            <if test="isFoot != null">
+                and isfoot = #{isFoot}
+            </if>
+            <if test="isNet != null">
+                and isNet = #{isNet}
+            </if>
+            <if test="p1 != null and p2 != null">
+                and rt.price between #{p1} and #{p2}
+            </if>
+            <if test="rtypeId != null and rtypeId != ''">
+                and rt.rtypeId = #{rtypeId}
+            </if>
+        </where>
+        group by rt.rtypeId
+    </select>
+
+    <select id="getRemains" resultType="int">
+        select count(*) remainNum
+        from rtype rt left join room r on rt.rtypeId = r.rtypeId
+        where
+            r.isRes = 0
+          and roomId is not null
+          and rt.rtypeId = #{rtypeid}
+    </select>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="rtypeid" useGeneratedKeys="true">
+        insert into hotelmanager.rtype(rtypeName, price, liveNum, facility, resMoney, isNet, isfoot, defImg, remark)
+        values (#{rtypename}, #{price}, #{livenum}, #{facility}, #{resmoney}, #{isnet}, #{isfoot}, #{defimg}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="rtypeid" useGeneratedKeys="true">
+        insert into hotelmanager.rtype(rtypeName, price, liveNum, facility, resMoney, isNet, isfoot, defImg, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.rtypename}, #{entity.price}, #{entity.livenum}, #{entity.facility}, #{entity.resmoney},
+            #{entity.isnet}, #{entity.isfoot}, #{entity.defimg}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="rtypeid" useGeneratedKeys="true">
+        insert into hotelmanager.rtype(rtypeName, price, liveNum, facility, resMoney, isNet, isfoot, defImg, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.rtypename}, #{entity.price}, #{entity.livenum}, #{entity.facility}, #{entity.resmoney},
+            #{entity.isnet}, #{entity.isfoot}, #{entity.defimg}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        rtypeName = values(rtypeName) , price = values(price) , liveNum = values(liveNum) , facility = values(facility)
+        , resMoney = values(resMoney) , isNet = values(isNet) , isfoot = values(isfoot) , defImg = values(defImg) ,
+        remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelmanager.rtype
+        <set>
+            <if test="rtypename != null and rtypename != ''">
+                rtypeName = #{rtypename},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="livenum != null">
+                liveNum = #{livenum},
+            </if>
+            <if test="facility != null and facility != ''">
+                facility = #{facility},
+            </if>
+            <if test="resmoney != null">
+                resMoney = #{resmoney},
+            </if>
+            <if test="isnet != null">
+                isNet = #{isnet},
+            </if>
+            <if test="isfoot != null">
+                isfoot = #{isfoot},
+            </if>
+            <if test="defimg != null and defimg != ''">
+                defImg = #{defimg},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where rtypeId = #{rtypeid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from hotelmanager.rtype
+        where rtypeId = #{rtypeid}
+    </delete>
+
+</mapper>
+

@@ -1,0 +1,298 @@
+.cl {
+    zoom: 1
+}
+.cl:after {
+    content: '\20';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+.l {
+    float: left
+}
+
+.r {
+    float: right
+}
+
+foo, .foo {
+    color: #f00;
+}
+
+/*滚动条*/
+::-webkit-scrollbar-corner{
+    background: #1aa094;
+}
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1aa094;
+}
+::-webkit-scrollbar-thumb:window-inactive { background: #1aa094}
+
+
+/*左栏*/
+.left {
+    position: fixed;
+    left: 0;
+    top: 50px;
+    width: 150px;
+    height: 100%;
+    background: #bfd3ea;
+    overflow-x: auto;
+}
+
+.left ul li {
+    float: left;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.left ul li.hidden div {
+    display: none;
+}
+
+.left ul li.hidden i.arrow {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    padding-bottom: 4px;
+}
+
+.left ul li a {
+    color: black;
+    padding: 10px 0 10px 20px;
+    display: block;
+}
+
+.left ul li a:hover,
+.left ul li a.active {
+    color: white;
+    background: #bfd3ea;
+}
+
+.left ul li i:first-child {
+    margin-right: 5px;
+}
+
+.left ul li i.arrow {
+    float: right;
+    margin-right: 20px;
+    font-size: 12px;
+    padding-top: 4px;
+}
+
+.left ul li > div {
+    position: relative;
+    background-color: #d2e4f8;
+}
+
+.left ul li > div a {
+    padding-left: 45px;
+    color: black;
+}
+
+.left ul li i.active {
+    color: #eee;
+    position: absolute;
+    right: -6px;
+    height: 40px;
+    line-height: 40px;
+    top: 0px;
+    margin: 0;
+    font-size: 20px;
+    z-index: 1;
+    transform: rotateY(180deg);
+}
+
+
+/*顶栏*/
+header {
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #bfd3ea;
+    position: fixed;
+    top: 0;
+    z-index: 1001;
+    color: #bfd3ea;
+}
+
+header h1 {
+    height: 50px;
+    line-height: 50px;
+    width: 150px;
+    display: block;
+    color: #FFF;
+    float: left;
+    background-color: #404852;
+    text-align: center;
+    font-size: 36px;
+}
+
+header .breadcrumb {
+    margin-left: 150px;
+    padding-left: 20px;
+}
+
+header .breadcrumb i {
+    float: left;
+}
+
+header .breadcrumb ul {
+    float: left;
+}
+
+header .breadcrumb li {
+    float: left;
+    margin: 0 3px;
+}
+
+/* 右边 */
+.right {
+    margin: 50px 0px 0px 150px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.layui-container {
+    width: 100%;
+}
+
+.layui-nav a {
+    font-weight: bold;
+}
+
+.room_info {
+    background-color: #ffffff;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.room_info .content {
+    width: 100%;
+    height: 100%;
+}
+
+.content .content_left {
+    width: 20%;
+    height: 90%;
+    margin: 10px auto;
+    text-align: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    float: left;
+}
+
+.content_left img {
+    width: 90%;
+    height: 75%;
+    display: inline-block;
+}
+
+.content_left span {
+    display: inline-block;
+    font-family: "Microsoft Himalaya";
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.content .content_right {
+    width: 78%;
+    height: 100%;
+    display: inline-block;
+    float: right;
+}
+
+.content_right ul {
+    text-decoration: none;
+    display: inline-block;
+    width: 70%;
+    height: 100%;
+}
+
+.content_right ul > li {
+    display: inline-block;
+    float: left;
+    width: 20%;
+}
+
+.content_right li div {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.content_right .content_book {
+    display: inline-block;
+    float: right;
+    width: 28%;
+    height: 100%;
+}
+
+.content_book .book_title {
+    width: 100%;
+    margin-top: 10%;
+    text-align: center;
+    color: dodgerblue;
+    font-size: 2.3em;
+}
+
+.content_book .book_btn {
+    width: 100%;
+    margin-top: 5%;
+    text-align: center;
+}
+
+._selected {
+    border: 2px solid navajowhite;
+}
+
+.room_info .room_detail {
+    padding: 10px;
+    height: 150px;
+    background-color: #f0f2f5;
+    display: none;
+    text-align: center;
+}
+
+.room_detail ul {
+    text-decoration: none;
+    width: 90%;
+    height: 95%;
+}
+
+.room_detail ul > li {
+    width: 18%;
+    height: 100%;
+    float: left;
+    margin-left: 2%;
+    display: inline-block;
+    text-align: left;
+}
+
+.room_detail ul h4 {
+    font-weight: bold;
+    text-align: center;
+}
+
+.room_detail ul p {
+    margin-top: 10px;
+    text-align: left;
+    margin-left: 28%;
+}
+
+
+
+
+
+
+
+
